@@ -11,19 +11,10 @@
 
   <body class="rec-bg">
     <main class="container">
-      {% if status == "0" %}
-      <div class="alert-red" style="display: block;" >
-        <h3>Senha ou E-mail Errado/a   <span role="button" class="X" name="alerta" onclick=closealerta()><i class="fa-solid fa-xmark"></i></span></h3>
-    {% if tentativa > 3 %}
-        <h3>Se esqueceu a senha tente recuperar ela <a href="{% url 'recuperar_senha_dois' %}">Recuperar Senha</a></h3>
-    {% endif %}
-      </div>
-      </div>
-      {% endif %}
 
-      <form action="{% url 'recuperar_senha_um' %}" autocomplete="off" method="POST">{% csrf_token %}
-        <h1>Recuperar conta</h1>
-          <div class="input-box">
+      <form action="{% url 'recuperar_senha_dois' %}" autocomplete="off" method="POST">{% csrf_token %}
+        <h1>Recuperar conta 2</h1>
+                <div class="input-box">
           <input
             type="text"
             name="name"
@@ -46,13 +37,13 @@
             type="password"
             name="senha_rec"
             id="password"
-            placeholder="senha de recuperação 1"
+            placeholder="senha de recuperação 2"
             required
           />
         </div>
         <button type="submit" class="login"><abbr title="Fazer Login">Recuperar Senha</abbr></button>
         <div class="remenber-forgot">
-          <a href="{% url 'recuperar_senha_dois' %}">Recuperar senha 2</a>
+          <a href="{% url 'recuperar_senha_um' %}">Recuperar senha 1</a>
           <a href="{% url 'login' %}">Fazer login</a>
         </div>
       </form>

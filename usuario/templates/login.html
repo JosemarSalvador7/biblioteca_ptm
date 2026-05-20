@@ -1,1 +1,73 @@
-{% extends 'base.html' %}
+{% load static %}
+<!doctype html>
+<html lang="pt-Br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'auth/auth.css' %}" />
+    <link rel="stylesheet" href="{% static '/fontawesome/css/all.min.css' %}" />
+    <title>Iniciar essão</title>
+  </head>
+
+  <body class="login-bg">
+    <main class="container">
+      {% if status == "0" %}
+      <div class="alert-red" style="display: block">
+        <h3>
+          Senha ou E-mail Errado/a
+          <span role="button" class="X" name="alerta" onclick="closealerta(1)"
+            ><i class="fa-solid fa-xmark"></i
+          ></span>
+        </h3>
+        {% if tentativa > 3 %}
+        <h3>
+          Se esqueceu a senha tente recuperar ela
+          <a href="{% url 'recuperar_senha_um' %}">Recuperar Senha</a>
+        </h3>
+        {% endif %}
+      </div>
+      {% endif %} 
+      {% if status == '22' %}
+      <div class="alert-succes">
+        <h3>
+          Senha trocada com sucesso
+          <span role="button" class="X" name="alerta" onclick="closealerta(2)"
+            ><i class="fa-solid fa-xmark"></i>
+        </span>
+        </h3>
+      </div>
+      {% endif %}
+
+      <form action="{% url 'login' %}" autocomplete="off" method="POST">
+        {% csrf_token %}
+        <h1>Login</h1>
+        <div class="input-box">
+          <input
+            type="text"
+            name="name"
+            id="username"
+            placeholder="Nome do Usuário"
+            required
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            name="senha"
+            id="password"
+            placeholder="Palavra-Passe"
+            required
+          />
+        </div>
+        <button type="submit" class="login">
+          <abbr title="Fazer Login">Entrar</abbr>
+        </button>
+        <div class="remenber-forgot">
+          <a href="{% url 'recuperar_senha_um' %}">Recuperar senha</a>
+        </div>
+      </form>
+    </main>
+    <script src="{% static 'auth/login.js' %}"></script>
+    <script src="{% static '/fontawesome/js/all.min.js' %}"></script>
+  </body>
+</html>
