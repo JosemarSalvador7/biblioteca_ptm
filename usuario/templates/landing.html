@@ -1,0 +1,65 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biblioteca PTM-4.1 | Início</title>
+    <link rel="stylesheet" href="{% static 'landing/style.css' %}" />
+    <link rel="stylesheet" href="{% static '/fontawesome/css/all.min.css' %}" />
+  </head>
+  <body>
+    <section class="hero">
+      <h1>Biblioteca PTM-4.1</h1>
+      <p class="proverbio">"Conectando leitores ao saber..."</p>
+
+      <a href="{% url 'login' %}" class="btn-login">ACEDER AO PAINEL</a>
+
+      <div class="hero-subtext">
+        Encontre conteúdos que inspiram, descubra livros e autores. <br />
+        A sua porta de entrada para o conhecimento infinito e gestão eficiente.
+      </div>
+    </section>
+
+    <div class="features-container">
+      <h2 class="section-title"></h2>
+
+      <div class="features-grid">
+        <div class="card">
+          <i class="fa-solid fa-gear"></i>
+          <h3>Gestão Operacional</h3>
+          <p>
+            Organize o acervo, controle empréstimos e valide devoluções com
+            rapidez. Otimize o dia a dia da biblioteca com ferramentas
+            profissionais.
+          </p>
+        </div>
+
+        <div class="card">
+          <i class="fa-solid fa-toolbox"></i>
+          <h3>Administração Total</h3>
+          <p>
+            Gerencie usuários, perfis de acesso e emita relatórios detalhados
+            das atividades para um controle absoluto do sistema.
+          </p>
+        </div>
+
+        <div class="card">
+          <i class="fa-solid fa-book-open-reader"></i>
+          <h3>Sua Library Mais Perto</h3>
+          <p>
+            Aceda à sua área pessoal para ver registros históricos, realizar
+            novos logins e gerenciar suas preferências.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        © 2026 PTM-4.1 - Sistema de Biblioteca Integrado | Eficiência e Inovação
+        na Gestão de Conhecimento
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,203 @@
+:root {
+  --primary-dark: #2d1b10;
+  --accent-color: #a67c52;
+  --gold-shine: #ffd700;
+  --white: #ffffff;
+  /* Castanho suave para o fundo da página */
+  --page-bg-brown: #f4ece6;
+  --brown-glass: rgba(45, 27, 16, 0.05);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+/* Fundo da página agora é um tom castanho */
+body {
+  background-color: var(--page-bg-brown);
+  overflow-x: hidden;
+}
+
+/* SEÇÃO HERO */
+.hero {
+  height: 75vh;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../img/estagio.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  clip-path: ellipse(150% 100% at 50% 0%);
+  padding: 0 20px;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: 3.8rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.proverbio {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: yellow;
+  margin-bottom: 35px;
+  max-width: 850px;
+  line-height: 1.4;
+}
+
+.btn-login {
+  background: var(--white);
+  color: var(--primary-dark);
+  padding: 15px 45px;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: 0.4s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 25px;
+}
+
+.btn-login:hover {
+  background: var(--accent-color);
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* Subtexto com efeito de brilho corrido (mesmo do rodapé) */
+.hero-subtext {
+  font-size: 1.1rem;
+  max-width: 750px;
+  line-height: 1.5;
+  font-weight: 500;
+  background: linear-gradient(
+    to right,
+    #f0f0f0 0%,
+    #f0f0f0 45%,
+    var(--gold-shine) 50%,
+    #f0f0f0 55%,
+    #f0f0f0 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-glimmer 4s linear infinite;
+}
+
+/* SEÇÃO DE CAIXOTES - MANS E LIMPAS */
+.features-container {
+  padding: 60px 10% 100px;
+  text-align: center;
+  background: transparent; /* Removida qualquer inscrição de fundo */
+}
+
+.section-title {
+  margin-bottom: 80px;
+  font-size: 1.8rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.features-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: -120px;
+}
+
+.card {
+  background: white;
+  padding: 75px 35px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  max-width: 360px;
+  min-height: 450px;
+  text-align: center;
+  transition: 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(166, 124, 82, 0.1);
+}
+.card i{
+    font-size: 80px;
+    margin-bottom: 10px;
+    color: var(--primary-dark);
+
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background-color: var(--accent-color);
+}
+
+.card h3 {
+  color: var(--primary-dark);
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+}
+.card p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.card:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-10px);
+}
+.card:hover h3,
+.card:hover p {
+  color: white;
+}
+
+/* RODAPÉ EM LINHA ÚNICA COM VISLUMBRE DOURADO */
+footer {
+  text-align: center;
+  padding: 35px;
+  background: var(--white);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.footer-content {
+  font-size: 0.95rem;
+  display: inline-block;
+  font-weight: 500;
+  background: linear-gradient(
+    to right,
+    #555 0%,
+    #555 45%,
+    var(--gold-shine) 50%,
+    #555 55%,
+    #555 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-glimmer 4s linear infinite;
+}
+
+@keyframes gold-glimmer {
+  0% {
+    background-position: -100% center;
+  }
+  100% {
+    background-position: 100% center;
+  }
+}

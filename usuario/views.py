@@ -116,6 +116,9 @@ def dashboard(request):
                                               })
 
 
+def landing(requets):
+    return render(requets,'landing.html',{})
+
 def logout(request):
     request.session.flush()
     return redirect('login')
