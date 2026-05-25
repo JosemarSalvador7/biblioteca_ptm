@@ -5,6 +5,7 @@ from livro.models import Livro, Emprestimo, Reserva, Categoria
 import hashlib
 import re
 
+
 # Create your views here.
 
 def login(request):
@@ -108,11 +109,17 @@ def dashboard(request):
     Total_livros = Livro.objects.count()
     usuario = Usuario.objects.get(id=request.session.get('usuario'))
     categorias = Categoria.objects.all()
+    usuarios = Usuario.objects.all()
+    total_activos = Livro.objects.filter(estado='disponivel')
+    total_emprestados = Emprestimo.objects.all()
 
     return render(request, 'dashboard.html', {'usuario': usuario,
                                               'nivel_acesso': request.session.get('nivel_acesso'),
                                               'total_livros': Total_livros,
                                               'categorias': categorias.count(),
+                                              'total_usuarios': usuarios.count(),
+                                              'total_activos': total_activos.count(),
+                                              'total_emprestados': total_emprestados.count()
                                               })
 
 

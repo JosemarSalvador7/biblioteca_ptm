@@ -1,1 +1,577 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>PTM-4 · Gestão de Biblioteca </title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Fonte Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================= */
+        /* 1. RESET E VARIÁVEIS GLOBAIS                  */
+        /* ============================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Cores definidas  */
+        :root {
+            --primaria:  #3e261f;      /* castanho escuro principal (cabeçalho, sidebar) */
+            --secundaria: #5D4037;     /* castanho mais profundo para hovers */
+            --texto: #ffffff;          /* branco para textos sobre fundo escuro */
+            --texto2: #f5f5f5;        /* branco suave para textos secundários */
+            --texto3: #008000;        /* verde para indicadores positivos */
+            --texto4: #FF0000;        /* vermelho para alertas */
+            --fundo-pagina: #f8f4ef;   /* bege claro para contraste */
+            --hover-claro: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background-color: var(--fundo-pagina);
+            height: 100vh;
+            overflow: hidden;
+            color: #2c1e16;
+        }
+
+        /* estrutura principal da aplicação */
+        .aplicacao {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ========= CABEÇALHO (COR PRIMÁRIA) ========= */
+        .cabecalho {
+            background-color: var(--primaria);
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid var(--secundaria);
+            z-index: 10;
+        }
+
+        .link{
+            color: white;
+            text-decoration: none;
+        }
+
+        .area-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+        }
+
+        .icone-logo {
+            font-size: 2rem;
+            color: var(--texto);
+        }
+
+        .texto-logo {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--texto);
+            letter-spacing: 1px;
+        }
+
+        /* botões de navegação no cabeçalho - efeito hover */
+        .navegacao-botoes {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .botao-nav {
+            background: transparent;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: var(--texto2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .botao-nav i {
+            font-size: 1rem;
+        }
+
+        /* Efeito hover nos botões do cabeçalho */
+        .botao-nav:hover {
+            background-color: var(--secundaria);
+            color: var(--texto);
+            transform: translateY(-2px);
+        }
+
+        /* Botão "Usuário" mantém-se visualmente ativo, mas também com hover */
+        .botao-nav.ativo {
+            background-color: var(--secundaria);
+            color: var(--texto);
+        }
+
+        /* ========= CONTAINER PRINCIPAL (SIDEBAR + CONTEÚDO) ========= */
+        .container-principal {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* ========= SIDEBAR (COR PRIMÁRIA, APENAS MÓDULO USUÁRIO) ========= */
+        .barra-lateral {
+            width: 300px;
+            background-color: var(--primaria);
+            color: var(--texto2);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            border-right: 1px solid var(--secundaria);
+        }
+
+        /* área das opções da sidebar */
+        .opcoes-sidebar {
+            flex: 1;
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .titulo-secao {
+            font-size: 1.25rem;
+            font-weight: 600;
+            border-left: 4px solid var(--texto);
+            padding-left: 14px;
+            color: var(--texto2);
+        }
+
+        /* lista de funcionalidades (fixa: apenas opções de usuário) */
+        .lista-funcionalidades {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            list-style: none;
+        }
+
+        .lista-funcionalidades li {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .lista-funcionalidades li a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            color: var(--texto2);
+            font-weight: 500;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lista-funcionalidades li a i {
+            width: 26px;
+            font-size: 1.15rem;
+            color: var(--texto);
+            transition: color 0.2s;
+        }
+
+        /* Efeito hover nos itens da sidebar */
+        .lista-funcionalidades li:hover {
+            background: var(--secundaria);
+            transform: translateX(6px);
+            border-color: var(--texto2);
+        }
+
+        .lista-funcionalidades li:hover a {
+            color: var(--texto);
+        }
+
+        .lista-funcionalidades li:hover a i {
+            color: var(--texto);
+        }
+
+        /* Botão de logout/sair na parte inferior da sidebar */
+        .botao-sair {
+            margin-top: auto;
+            padding: 1rem 1.2rem 1.8rem 1.2rem;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--texto2);
+            border-radius: 40px;
+            padding: 0.8rem 1rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--texto2);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-logout i {
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+
+        /* Efeito hover no botão Sair */
+        .btn-logout:hover {
+            background-color: var(--secundaria);
+            color: var(--texto);
+            border-color: var(--texto);
+            transform: scale(1.02);
+        }
+
+        .btn-logout:hover i {
+            transform: translateX(3px);
+        }
+
+        /* ========= ÁREA DE CONTEÚDO PRINCIPAL (ESTÁTICA) ========= */
+        .main-content {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        /* topo (barra com título e perfil) */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            color: #3e261f;
+        }
+
+        .topbar p {
+            color: #666;
+        }
+
+        .user-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffffff;
+            padding: 10px 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        /* Leve efeito hover na caixa do utilizador */
+        .user-box:hover {
+            transform: translateY(-2px);
+        }
+
+        .user-box img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* cards de estatísticas */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .card {
+            background: #5D4037;
+            color: #ffffff;
+            padding: 25px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Efeito hover nos cards */
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            opacity: 0.8;
+            transition: transform 0.2s;
+        }
+
+        .card:hover i {
+            transform: scale(1.1);
+        }
+
+        /* variações de cor dos cards */
+        .green {
+            background: #008000;
+        }
+        .red {
+            background: #FF0000;
+        }
+        .brown {
+            background: #3e261f;
+        }
+
+        /* tabela de livros recentes */
+        .table-section {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-header h2 {
+            color: #3e261f;
+        }
+
+        /* Botão "Mostrar mais" com efeito hover */
+        #btn {
+            background: #5D4037;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        #btn:hover {
+            background: #008000;
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #3e261f;
+            color: #ffffff;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #ddd;
+            transition: background 0.2s;
+        }
+
+        /* Efeito hover nas linhas da tabela */
+        tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: #ffffff;
+            font-size: 13px;
+            display: inline-block;
+        }
+        .disponivel {
+            background: #4ae94a;
+        }
+        .emprestado {
+            background: #FF0000;
+        }
+
+        /* scrollbar personalizada (apenas CSS) */
+        .barra-lateral::-webkit-scrollbar {
+            width: 5px;
+        }
+        .barra-lateral::-webkit-scrollbar-track {
+            background: #2a1f15;
+        }
+        .barra-lateral::-webkit-scrollbar-thumb {
+            background: var(--texto2);
+            border-radius: 10px;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .main-content::-webkit-scrollbar-track {
+            background: #e2d4c6;
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: var(--secundaria);
+            border-radius: 8px;
+        }
+
+        /* ========= RESPONSIVIDADE ========= */
+        @media (max-width: 768px) {
+            .container-principal {
+                flex-direction: column;
+            }
+            .barra-lateral {
+                width: 100%;
+            }
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="aplicacao">
+    <!-- ================= CABEÇALHO ================= -->
+    <header class="cabecalho">
+        <div class="area-logo">
+            <i class="fas fa-book-open icone-logo"></i>
+            <span class="texto-logo">Biblioteca PTM-4.1</span>
+        </div>
+        <div class="navegacao-botoes">
+            <!-- Botões com hover; o "Usuário" mantém-se visualmente ativo -->
+            <button class="botao-nav ativo"><i  class="fas fa-home"></i> <a href="#" class="link"> Home</a></button>
+            <button class="botao-nav"><i class="fas fa-user-circle"></i> <a href="#" class="link"> Usuário</a></button>
+            <button class="botao-nav"><i class="fas fa-book"></i><a href="livro.html" class="link">Livro</a></button>
+            <button class="botao-nav"><i class="fas fa-hand-holding-heart"></i>  <a href="#" class="link">Empréstimo</a></button>
+            <button class="botao-nav"><i class="fas fa-calendar-check"></i>  <a href="reservas.html" class="link">Reservas</a></button>
+            <button class="botao-nav"><i class="fas fa-undo-alt"></i> <a href="#" class="link">Devolução</a></button>
+            <button class="botao-nav"><i class="fas fa-users"></i> <a href="#" class="link">Leitores</a></button>
+            <button class="botao-nav"><i class="fa-solid fa-right-from-bracket"></i> <a href="{% url 'logout' %}" class="link">Sair</a></button>
+        </div>
+    </header>
+
+    <div class="container-principal">
+        <!-- ================= SIDEBAR (APENAS MÓDULO USUÁRIO) ================= -->
+       
+
+        <!-- ================= CONTEÚDO PRINCIPAL ================= -->
+        <main class="main-content">
+            <!-- topo com saudação e perfil -->
+            <header class="topbar">
+                <div>
+                    <h1>Painel da Biblioteca</h1>
+                    <p>Bem-vindo ao Sistema de gestão.</p>
+                </div>
+                <div class="user-box">
+                    <span>Usuario: {{usuario.nome}}</span>
+                </div>
+            </header>
+
+            <!-- cards de estatísticas com hover -->
+            <section class="cards">
+                <div class="card">
+                    <div>
+                        <h3>Total de Livros</h3>
+                        <p>{{total_livros}}</p>
+                    </div>
+                    <i class="fa-solid fa-book"></i>
+                </div>
+                <div class="card green">
+                    <div>
+                        <h3>Livros Disponíveis</h3>
+                        <p>{{total_activos}}</p>
+                    </div>
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div class="card red">
+                    <div>
+                        <h3>Livros Emprestados</h3>
+                        <p>{{total_emprestados}}</p>
+                    </div>
+                    <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+                <div class="card brown">
+                    <div>
+                        <h3>Usuários</h3>
+                        <p>{{total_usuarios}}</p>
+                    </div>
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </section>
+
+            <!-- tabela de livros recentes -->
+            <section class="table-section">
+                <div class="table-header">
+                    <h2>Livros recentes</h2>
+                    <button id="btn">Mostrar mais</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Autor</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dom Casmurro</td>
+                            <td>Machado de Assis</td>
+                            <td>Romance</td>
+                            <td><span class="status disponivel">Disponível</span></td>
+                        </tr>
+                        <tr>
+                            <td>O Pequeno Príncipe</td>
+                            <td>Antoine de Saint-Exupéry</td>
+                            <td>Infantil</td>
+                            <td><span class="status emprestado">Emprestado</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</div>
+</body>
+</html>
